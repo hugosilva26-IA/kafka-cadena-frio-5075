@@ -1,0 +1,52 @@
+# Laboratorio AEE - Kafka 4.0 (KRaft) - Modulo 5074 Sistemas de Big Data
+# Nodo unico en modo combinado (broker + controller), sin ZooKeeper.
+# Acceso desde el anfitrion: localhost:9092
+
+services:
+  kafka:
+    image: apache/kafka:4.0.0
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      # --- Identidad del nodo y roles KRaft ---
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+
+      # --- Listeners ---
+      # 9092 -> clientes (productor/consumidor Python, CLI)
+      # 9093 -> trafico interno del controlador KRaft
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+
+      # --- Factor de replicacion 1 (clúster de un solo nodo) ---
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+      # --- Rebalanceo rapido del Consumer Group (util para la prueba en caliente) ---
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # --- Almacenamiento persistente ---
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+    # --- PREPARACION PARA SPARK (Fase 4, cuestion 3) ---
+    # Para que coexistan acceso local (localhost:9092) e interno (kafka:29092)
+    # se sustituye la configuracion de listeners por:
+    #
+    #   KAFKA_LISTENERS: PLAINTEXT://:29092,PLAINTEXT_HOST://:9092,CONTROLLER://:9093
+    #   KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+    #   KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+    #   KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    #
+    # Los contenedores de la red Docker usan kafka:29092 y el anfitrion localhost:9092.
+
+volumes:
+  kafka-data:
