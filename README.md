@@ -1,6 +1,6 @@
 # Telemetría de cadena de frío con Apache Kafka
 
-Práctica del módulo **5074 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. En este proyecto he montado un prototipo para recibir la temperatura y la posición GPS de una flota de camiones frigoríficos y detectar en el momento las lecturas que pueden romper la cadena de frío.
+Práctica del módulo **5075 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. En este proyecto he montado un prototipo para recibir la temperatura y la posición GPS de una flota de camiones frigoríficos y detectar en el momento las lecturas que pueden romper la cadena de frío.
 
 La propuesta sustituye el envío de pequeños CSV a HDFS por eventos publicados en Apache Kafka 4.0, desplegado en modo KRaft con Docker Compose. El productor genera telemetría para cuatro camiones y el consumidor registra las alertas cuando la temperatura supera los −18 °C.
 
