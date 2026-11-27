@@ -1,0 +1,8 @@
+2026-11-27T12:29:41Z | vehiculo=CAM-01 | temp_c=-14.0 | lat=37.3893 | lon=-5.9846 | particion=2 | offset=38
+2026-11-27T12:29:43Z | vehiculo=CAM-02 | temp_c=-15.5 | lat=37.3992 | lon=-5.975 | particion=1 | offset=77
+2026-11-27T12:29:48Z | vehiculo=CAM-02 | temp_c=-14.6 | lat=37.3985 | lon=-5.9757 | particion=1 | offset=81
+2026-11-27T12:29:57Z | vehiculo=CAM-04 | temp_c=-15.2 | lat=37.42 | lon=-5.9544 | particion=1 | offset=90
+2026-11-27T12:30:01Z | vehiculo=CAM-04 | temp_c=-16.5 | lat=37.4204 | lon=-5.9537 | particion=1 | offset=94
+2026-11-27T12:30:02Z | vehiculo=CAM-03 | temp_c=-15.4 | lat=37.4082 | lon=-5.9625 | particion=0 | offset=47
+2026-11-27T12:30:04Z | vehiculo=CAM-03 | temp_c=-16.1 | lat=37.408 | lon=-5.9628 | particion=0 | offset=48
+2026-11-27T12:30:05Z | vehiculo=CAM-01 | temp_c=-14.9 | lat=37.3899 | lon=-5.9854 | particion=2 | offset=50
