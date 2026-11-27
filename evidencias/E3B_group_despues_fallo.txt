@@ -1,0 +1,4 @@
+GROUP              TOPIC             PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG  CONSUMER-ID
+grupo-alertas-frio telemetria-frio   0          52              52              0    kafka-python-2.2.3-5e60fe18-6934-4e59-a03b-a5514d366029
+grupo-alertas-frio telemetria-frio   1          105             105             0    kafka-python-2.2.3-5e60fe18-6934-4e59-a03b-a5514d366029
+grupo-alertas-frio telemetria-frio   2          53              53              0    kafka-python-2.2.3-5e60fe18-6934-4e59-a03b-a5514d366029
