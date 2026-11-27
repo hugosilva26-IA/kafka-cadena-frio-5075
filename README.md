@@ -12,11 +12,10 @@ Kafka recibe los eventos en el topic `telemetria-frio`. El productor genera y pu
 ├── README.md
 ├── src/
 │   ├── productor_frio.py
-│   └── consumidor_alerta.py
+│   └── consumidor_alertas.py
 └── evidencias/
     ├── E1_topic_describe.png
     ├── E2_productor_salida.png
-    ├── E3-B.png
     ├── E3A_group_antes_fallo.txt
     ├── E3B_group_despues_fallo.txt
     └── alertas_detectadas.log
