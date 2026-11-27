@@ -1,6 +1,6 @@
 # Telemetría de cadena de frío con Apache Kafka
 
-Práctica del módulo **5075 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. El proyecto simula la telemetría de cuatro camiones frigoríficos y detecta en tiempo real las lecturas que superan −18 °C.
+Práctica del módulo **5074 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. El proyecto simula la telemetría de cuatro camiones frigoríficos y detecta en tiempo real las lecturas que superan −18 °C.
 
 Kafka recibe los eventos en el topic `telemetria-frio`. El productor genera y publica los datos; dos instancias del consumidor, dentro del mismo grupo, se reparten las particiones y guardan las alertas en un archivo de log.
 
@@ -129,7 +129,7 @@ Debe aparecer un consumidor activo con las tres particiones y `LAG` en cero cuan
 ## Evidencias
 
 - **E1 – Topic:** [descripción del topic y sus particiones](evidencias/E1_topic_describe.png).
-- **E2 – Productor:** [salida del productor](evidencias/E2_productor_salida.png).
+- **E2 – Productor:** [captura del resumen del productor](evidencias/E2_productor_salida.png).
 - **E3-A – Reparto inicial:** [salida del grupo antes de detener un consumidor](evidencias/E3A_group_antes_fallo.txt).
 - **E3-B – Recuperación:** [salida del grupo después de detenerlo](evidencias/E3B_group_despues_fallo.txt).
 - **E4 – Alertas:** [registro de temperaturas fuera del umbral](evidencias/alertas_detectadas.log).
@@ -148,16 +148,19 @@ El productor usa el identificador del camión (`vehiculo`) como `key`. Kafka dir
 
 ### Conexión futura desde Spark
 
-En esta práctica, los scripts ejecutados en el anfitrión se conectan a `localhost:9092`. El `docker-compose.yml` actual no configura un listener interno para clientes Spark. Para conectar un contenedor Spark en la red de Docker habría que añadir listeners separados para los clientes del anfitrión y los contenedores [1]. Por ejemplo, se podría reservar `29092` para el tráfico interno y mantener `9092` para el anfitrión:
+En esta práctica, los scripts ejecutados en el anfitrión se conectan a `localhost:9092`. El `docker-compose.yml` actual no configura un listener interno para clientes Spark. Para conectar Spark dentro de la red Docker, Kafka debe anunciar `kafka:9092`; para los scripts locales debe seguir anunciando `localhost:9092` [1]. Como ambos listeners no pueden enlazarse al mismo puerto dentro del contenedor, el listener local usa el puerto interno `29092`, publicado como `localhost:9092`:
 
 ```yaml
-KAFKA_LISTENERS: PLAINTEXT://:29092,PLAINTEXT_HOST://:9092,CONTROLLER://:9093
-KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+ports:
+  - "9092:29092"
+environment:
+  KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092,CONTROLLER://:9093
+  KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+  KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
 ```
 
-Con esa configuración, los scripts locales seguirían usando `localhost:9092` y Spark usaría `kafka:29092`. El nombre `kafka` resuelve dentro de la red de Compose; `localhost` dentro del contenedor Spark señalaría al propio contenedor Spark, no al broker.
+Con esa configuración, los scripts locales seguirían usando `localhost:9092` y Spark usaría `kafka:9092`. El nombre `kafka` resuelve dentro de la red de Compose; `localhost` dentro del contenedor Spark señalaría al propio contenedor Spark, no al broker.
 
 ## Referencias
 
