@@ -1,6 +1,6 @@
 # Telemetría de cadena de frío con Apache Kafka
 
-Práctica del módulo **5074 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. El proyecto simula la telemetría de cuatro camiones frigoríficos y detecta en tiempo real las lecturas que superan −18 °C.
+Práctica del módulo **5075 – Sistemas de Big Data** del Curso de Especialización en Inteligencia Artificial y Big Data. El proyecto simula la telemetría de cuatro camiones frigoríficos y detecta en tiempo real las lecturas que superan −18 °C.
 
 Kafka recibe los eventos en el topic `telemetria-frio`. El productor genera y publica los datos; dos instancias del consumidor, dentro del mismo grupo, se reparten las particiones y guardan las alertas en un archivo de log.
 
