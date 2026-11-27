@@ -1,4 +1,4 @@
-# Laboratorio AEE - Kafka 4.0 (KRaft) - Modulo 5074 Sistemas de Big Data
+# Laboratorio AEE - Kafka 4.0 (KRaft) - Modulo 5075 Sistemas de Big Data
 # Nodo unico en modo combinado (broker + controller), sin ZooKeeper.
 # Acceso desde el anfitrion: localhost:9092
 
